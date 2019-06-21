@@ -32,12 +32,6 @@ public class TourController {
    @Autowired
    TourService tourService;
 
-   @Autowired
-    ResortService resortService;
-
-    @Autowired
-    TransportService transportService;
-
     @Autowired
     TourValidator tourValidator;
 

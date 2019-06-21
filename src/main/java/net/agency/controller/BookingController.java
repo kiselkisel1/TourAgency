@@ -74,13 +74,10 @@ public class BookingController {
         return "chooseTransport";
     }
 
-
-
     @GetMapping("/account")
     public String listBooking(@RequestParam("username") String username,Model model) {
         logger.debug("book get");
         User user=userService.findByUsername(username);
-
         model.addAttribute("booking", user.getBooking());
         return "account";
     }

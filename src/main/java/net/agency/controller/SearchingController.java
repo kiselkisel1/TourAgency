@@ -34,49 +34,44 @@ public class SearchingController {
     private static final Logger logger = LoggerFactory.getLogger(ResortServiceImpl.class);
 
 
-@GetMapping("/search")
-public String getPrice(Model model) {
+    @GetMapping("/search")
+    public String getPrice(Model model) {
         logger.debug("list all tours");
-         model.addAttribute("tours", tourService.getFreeAndActiveTours());
+        model.addAttribute("tours", tourService.getFreeAndActiveTours());
         return "searching";
     }
 
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String getDate( @RequestParam("name") String name,
-                          @RequestParam("date") String date,
-                          @RequestParam("price") String price, Model model) throws ParseException {
+                           @RequestParam("date") String date,
+                           @RequestParam("price") String price, Model model) throws ParseException {
 
-        Set<Tour> searchResults=new HashSet<>();
+        Set<Tour> searchResults = new HashSet<>();
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date newDate;
-        Resort resort=resortService.getByName(name);
-
-
-         if (!date.isEmpty() &&  date!=null && price!=null && !price.isEmpty()) {
-             newDate = format.parse(date);
-            searchResults = tourService.findByPriceAndDate(resort,Double.parseDouble(price), newDate);
+        Resort resort = resortService.getByName(name);
+        if (resort == null) {
+            model.addAttribute("exception", "There are no available tours");
+            logger.debug("resort==null");
         }
-     else if((date.isEmpty() ||  date==null ) && (price == null || price.isEmpty())) {
-             logger.debug("444");
+        else
+        {
+            if (!date.isEmpty() && date != null && price != null && !price.isEmpty()) {
+                newDate = format.parse(date);
+                searchResults = tourService.findByPriceAndDate(resort, Double.parseDouble(price), newDate);
+            } else if ((date.isEmpty() || date == null) && (price == null || price.isEmpty())) {
+                logger.debug("444");
+                searchResults = resort.getTours();
+            } else if ((date == null || date.isEmpty()) && (price != null || !price.isEmpty())) {
+                searchResults = tourService.sortByPrice(resort, Double.parseDouble(price));
+            } else if ((price == null || price.isEmpty()) && (!date.isEmpty() || date != null)) {
+                newDate = format.parse(date);
+                searchResults = tourService.sortByDate(resort, newDate);
+            }
+            model.addAttribute("tours", searchResults);
 
-             if(resort==null ){
-                 model.addAttribute("exception", "No such resort");
-             }
-             else{
-                 searchResults=resort.getTours();
-             }
         }
-
-   else if ((date == null || date.isEmpty()) && ( price!=null || !price.isEmpty())) {
-             searchResults = tourService.sortByPrice(resort,Double.parseDouble(price));
-        }
-    else if ((price == null || price.isEmpty()) && (!date.isEmpty() ||  date!=null ) ) {
-              newDate = format.parse(date);
-            searchResults = tourService.sortByDate(resort, newDate);
-        }
-        model.addAttribute("tours", searchResults);
         return "searching";
     }
-
 }

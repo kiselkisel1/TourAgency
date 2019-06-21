@@ -44,7 +44,7 @@ public class ResortController {
         logger.debug("Received request to show records page");
             resortService.checkActive();
             List<Resort>resorts=resortService.getAllActive();
-        model.addAttribute("activeResorts",resortService.IsActiveResorts(resorts));
+          model.addAttribute("activeResorts",resortService.IsActiveResorts(resorts));
             model.addAttribute("activeHotels",hotelService.IsActiveHotels(resorts));
            model.addAttribute("activeTours",tourService.IsActiveTours(resorts));
              model.addAttribute("activeTransports",transportService.IsActiveTransports(resorts));
@@ -75,19 +75,15 @@ public class ResortController {
     public String getDelete(@RequestParam("idResort") long id) {
         logger.debug("Received request to delete record");
 
-        // Delete person
-        resortService.delete(id);
+         resortService.delete(id);
 
-        // Redirect to url
-        return "redirect:/resort/list";
+         return "redirect:/resort/list";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String getEdit(@RequestParam("idResort") long id, Model model) {
         logger.debug("Received request to show edit page");
 
-
-        // Retrieve booking by id
         Resort resort = resortService.getOne(id);
         model.addAttribute("idResort",id);
 
@@ -97,9 +93,6 @@ public class ResortController {
         return "edit/edit-resort";
     }
 
-    /**
-     * Edits an existing record
-     */
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String postEdit(@RequestParam("idResort") long id,
                            @ModelAttribute("resortAttribute") @Valid  Resort resort,BindingResult result ) {

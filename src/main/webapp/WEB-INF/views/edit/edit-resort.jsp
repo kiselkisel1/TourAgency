@@ -1,13 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Мария
-  Date: 06.05.2019
-  Time: 17:27
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <html>
 <head>
     <title>Title</title>
@@ -20,28 +15,30 @@
 </head>
 <body>
 <div class="container">
-<c:url var="saveUrl" value="/resort/edit?idResort=${resortAttribute.id}" />
+    <jsp:include page="/WEB-INF/views/template/language.jsp"></jsp:include>
+
+    <c:url var="saveUrl" value="/resort/edit?idResort=${resortAttribute.id}" />
 
 <form:form modelAttribute="resortAttribute" method="POST" action="${saveUrl}">
 
-    <div class="container mt-3 mb-4 text-center" > <h2>Edit resort</h2> </div>
+    <div class="container mt-3 mb-4 text-center" > <h2><spring:message code="resort.placeholder"/></h2> </div>
 
     <div class="form-group row">
-        <form:label path="id" class="col-sm-2 col-form-label">Id : </form:label>
+        <form:label path="id" class="col-sm-2 col-form-label"><spring:message code="id"/></form:label>
         <div class="col-sm-7">
             <form:input class="form-control" path="id" disabled="true"/>
         </div>
     </div>
 
     <div class="form-group row">
-        <form:label path="name" class="col-sm-2 col-form-label">Name : </form:label>
+        <form:label path="name" class="col-sm-2 col-form-label"><spring:message code="name"/></form:label>
         <div class="col-sm-7">
             <form:input class="form-control" path="name"/>
             <form:errors path="name"/>
         </div>
     </div>
 
-    <button class="btn btn-primary btn-lg" type="submit">Save</button>
+    <button class="btn btn-primary btn-lg" type="submit"><spring:message code="save"/></button>
 </form:form>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -1,20 +1,22 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <%--<meta charset="utf-8">--%>
     <title>Login</title>
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
+</head>
 
 <body>
 
@@ -35,10 +37,10 @@
             <img src="${img1}">
             <div class="carousel-caption">
                 <h1 class="display-3">
-                    Enjoy Your Dream Vacation
+                    <spring:message code="h1.text"/>
                 </h1>
-                <h5>Travel to the any corner of the world, without going around in circles.</h5>
-                <a href="/search" class="btn btn-outline-light btn-lg">Choose tours</a>
+                <h5><spring:message code="h5.text"/></h5>
+                <a href="/search" class="btn btn-outline-light btn-lg"><spring:message code="button.search"/></a>
             </div>
         </div>
         <div class="carousel-item">
@@ -53,31 +55,31 @@
 <div class="container">
     <div class="row">
         <div class="col mb-4 mt-5">
-            <h1 class="display-4">Why Sun Travel</h1>
+            <h1 class="display-4"><spring:message code="header"/></h1>
         </div>
         <hr>
         <div class="col-12">
-            <p class="lead"> With SunTravel, you will find a perfect destination among hundreds available.</p>
+            <p class="lead"><spring:message code="p.text"/></p>
         </div>
     </div>
 </div>
 
-<div class="container-fluid paddin`g">
+<div class="container-fluid padding">
     <div class="row text-center padding">
         <div class="col-xs-12 col-sm-6 col-md-4">
             <i class="far fa-handshake"></i>
-            <h4>Personalized matching</h4>
-            <p>Our search system helps you find a personalized tour in just a few clicks.</p>
+            <h4><spring:message code="h4.text1"/></h4>
+            <p><spring:message code="p.text2"/></p>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-4">
             <i class="	far fa-thumbs-up"></i>
-            <h4>Highly qualified service</h4>
-            <p>Our high level of service is officially recognized by thousands of clients.</p>
+            <h4><spring:message code="h4.text2"/></h4>
+            <p><spring:message code="p.text3"/></p>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-4">
             <i class="far fa-credit-card"></i>
-            <h4>Best price guarantee</h4>
-            <p>We guarantee you will get top-notch comfort at an affordable price.</p>
+            <h4><spring:message code="h4.text3"/></h4>
+            <p><spring:message code="p.text4"/></p>
         </div>
     </div>
     <hr class="my-4">
@@ -85,8 +87,6 @@
 
 
 <jsp:include page="template/footer.jsp"></jsp:include>
-
-
 
 
 <!-- Optioanal JavaScript -->

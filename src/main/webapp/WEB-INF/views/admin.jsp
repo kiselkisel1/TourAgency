@@ -1,12 +1,13 @@
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="utf-8">
-    <title>Admin</title>
+     <title>Admin</title>
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <script type="text/javascript" src="/resources/js/openBlock.js">
     </script>
@@ -16,28 +17,27 @@
 
 </head>
 <body>
-
-<c:url var="deleteImgUrl" value="/resources/img/delete.png" />
+ <c:url var="deleteImgUrl" value="/resources/img/delete.png" />
 <c:url var="addUrl" value="/resort/add" />
 <c:url var="editImgUrl" value="/resources/img/edit.png" />
 
 <jsp:include page="template/header.jsp"></jsp:include>
 
 <c:if test="${pageContext.request.userPrincipal.name != null}">
-    <h2>Admin  ${pageContext.request.userPrincipal.name}</h2>
+    <h2><spring:message code="admin"/>  ${pageContext.request.userPrincipal.name}</h2>
 </c:if>
 
-<a id="toggler" href="#">See statistics</a>
+
+<a id="toggler" href="#"><spring:message code="statistics"/></a>
 <div id="box" style="display: none;">
     <ul>
         <c:forEach items="${allTours}" var="tour">
             <li>
-                Resort : <c:out value="${tour.resort.name}" />,
-                Tour : <c:out value="${tour.id}" />
-                Name= <c:out value="${tour.name}" />
-                Price= <c:out value="${tour.full_price}" />
-                Date begin= <fmt:formatDate value="${tour.date_begin}" pattern="dd.MM.yyyy"  />
-                Date end= <fmt:formatDate value="${tour.date_end}" pattern="dd.MM.yyyy"  />
+                 <spring:message code="resort.placeholder"/>: <c:out value="${tour.resort.name}" />,
+                 <c:out value="${tour.name}" />
+                <spring:message code="price"/> <c:out value="${tour.full_price}" />
+                <fmt:formatDate value="${tour.date_begin}" pattern="dd.MM.yyyy"  /> -
+                <fmt:formatDate value="${tour.date_end}" pattern="dd.MM.yyyy"  />
             </li>
         </c:forEach>
     </ul>
@@ -50,7 +50,7 @@
         <table class="table mb-4">
             <thead class="table-primary">
             <tr>
-                <th scope="col">Resort</th>
+                <th scope="col"><spring:message code="resort.placeholder"/></th>
                 <th scope="col"> <c:out value="${resort.id}" /> </th>
                 <th scope="col"> <c:out value="${resort.name}" /></th>
                 <th scope="col"> </th>
@@ -70,15 +70,15 @@
                         <c:url var="editTour" value="/tour/edit?idResort=${resort.id}&tourId=${tour.id}" />
                         <c:url var="deleteTour" value="/tour/delete?idResort=${resort.id}&tourId=${tour.id}" />
                         <tr class="table-secondary">
-                        <th scope="row">Tour</th>
+                        <th scope="row"><spring:message code="tour"/></th>
                         <td><c:out value="${tour.id}" /></td>
                         <td><c:out value="${tour.name}" /></td>
                         <td><c:out value="${tour.full_price}" /></td>
                         <td><fmt:formatDate value="${tour.date_begin}" pattern="dd.MM.yyyy"  /></td>
                         <td><fmt:formatDate value="${tour.date_end}" pattern="dd.MM.yyyy"  /></td>
 
-                        <td>  <a href="${addTour}">+</a></td>
-                        <td>  <a href="${editTour}"><img src="${editImgUrl}"></img></a></td>
+                        <td> <a href="${addTour}">+</a></td>
+                        <td> <a href="${editTour}"><img src="${editImgUrl}"></img></a></td>
                         <td> <a href="${deleteTour}"><img src="${deleteImgUrl}"></img></a></td>
 
 
@@ -94,7 +94,7 @@
 
                                 <c:if test="${transport.active == true}">
                                     <tr>
-                                        <th scope="row">Transport</th>
+                                        <th scope="row"><spring:message code="transport"/></th>
                                         <td><c:out value="${transport.id}" /></td>
                                         <td><c:out value="${transport.name}" /></td>
                                         <td><c:out value="${transport.description}" /></td>
@@ -111,7 +111,7 @@
 
                         <c:if test="${empty tour.transports}">
                             <tr>
-                                <th scope="row">Transport</th>
+                                <th scope="row"><spring:message code="transport"/></th>
                                 <td>-</td>
                                 <td>-</td>
                                 <td>-</td>
@@ -125,7 +125,7 @@
                         </c:if>
                         <c:if test="${activeTransports==false}">
                             <tr>
-                                <th scope="row">Transport</th>
+                                <th scope="row"><spring:message code="transport"/>/th>
                                 <td>-</td>
                                 <td>-</td>
                                 <td>-</td>
@@ -144,7 +144,7 @@
                             <c:forEach items="${tour.hotels}" var="hotel">
                                 <c:if test="${hotel.active == true }">
                                     <tr  class="table-success">
-                                        <th scope="row">Hotel</th>
+                                        <th scope="row"><spring:message code="hotel"/></th>
                                         <td><c:out value="${hotel.id}" /></td>
                                         <td><c:out value="${hotel.name}" /></td>
                                         <td><c:out value="${hotel.address}" /></td>
@@ -163,7 +163,7 @@
 
                         <c:if test="${activeHotels==false}">
                             <tr >
-                                <th scope="row">Hotel</th>
+                                <th scope="row"><spring:message code="hotel"/></th>
                                 <td>-</td>
                                 <td>-</td>
                                 <td>-</td>
@@ -177,7 +177,7 @@
                         </c:if>
                         <c:if test="${empty tour.hotels}">
                             <tr >
-                                <th scope="row">Hotel</th>
+                                <th scope="row"><spring:message code="hotel"/></th>
                                 <td>-</td>
                                 <td>-</td>
                                 <td>-</td>
@@ -197,7 +197,7 @@
 
             <c:if test="${empty resort.tours}">
                 <tr class="table-secondary">
-                    <td scope="row">Tour</td>
+                    <td scope="row"><spring:message code="tour"/></td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -212,7 +212,7 @@
 
             <c:if test="${activeTours==false}">
                 <tr class="table-secondary">
-                    <td scope="row">Tour</td>
+                    <td scope="row"><spring:message code="tour"/></td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -236,7 +236,7 @@
 <c:if test="${activeResorts==false}">
     <thead class="table-primary">
     <tr>
-        <th scope="col">Resort</th>
+        <th scope="col"><spring:message code="resort.placeholder"/></th>
         <th scope="col">-</th>
         <th scope="col">-</th>
         <th scope="col">-</th>
@@ -257,3 +257,4 @@
 
 </body>
 </html>
+

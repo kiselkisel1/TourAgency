@@ -1,12 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Мария
-  Date: 25.05.2019
-  Time: 15:17
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+ <html>
 <head>
     <%--<title>Title</title>--%>
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
@@ -21,7 +16,7 @@
     <div class="container-fluid ">
         <div class="row padding text-center">
             <div class="col-12">
-                <h4>Our contacts:</h4>
+                <h4><spring:message code="contacts"/></h4>
             </div>
             <div class="col-12 social padding">
                 <a href="#"><i class="fab fa-twitter"></i></a>

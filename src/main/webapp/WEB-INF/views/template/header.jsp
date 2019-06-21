@@ -1,8 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <%--<meta charset="UTF-8">--%>
     <%--<title>Title</title>--%>
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 
@@ -21,19 +24,19 @@
     <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/">Home </a>
+                <a class="nav-link" href="/"><spring:message code="home"/></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="/search">Tours</a>
+                <a class="nav-link" href="/search"><spring:message code="tours"/></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="/account?username=${pageContext.request.userPrincipal.name}">Account</a>
+                <a class="nav-link" href="/account?username=${pageContext.request.userPrincipal.name}"><spring:message code="account"/></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="/resort/list">Admin</a>
+                <a class="nav-link" href="/resort/list"><spring:message code="admin"/></a>
             </li>
 
         </ul>
@@ -42,11 +45,18 @@
         <c:when test="${pageContext.request.userPrincipal.name == null}">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/login">Log in</a>
+                <a class="nav-link" href="/login"><spring:message code="logIn"/></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/registration">Registration </a>
+                <a class="nav-link" href="/registration"><spring:message code="createAccount"/></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?lang=en">en</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?lang=ru">ru</a>
+            </li>
+
         </ul>
 
         </c:when>
@@ -54,7 +64,7 @@
                 <form id="logoutForm" method="POST" action="/logout">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
-                <div class="navbar-text">${pageContext.request.userPrincipal.name}| <a onclick="document.forms['logoutForm'].submit()">Logout</a></div>
+                <div class="navbar-text"><a href="?lang=en">en</a> <a href="?lang=ru">ru</a> ${pageContext.request.userPrincipal.name}| <a onclick="document.forms['logoutForm'].submit()"><spring:message code="logOut"/></a></div>
         </c:otherwise>
         </c:choose>
     </div>

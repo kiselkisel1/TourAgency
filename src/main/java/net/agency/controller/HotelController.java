@@ -91,9 +91,7 @@ public class HotelController {
         return "edit/edit-hotel";
     }
 
-    /**
-     * Edits an existing credit card
-     */
+
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String postEdit(@RequestParam("id") long hotelId,
                            @RequestParam("file") MultipartFile file,

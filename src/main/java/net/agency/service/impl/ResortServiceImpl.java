@@ -28,7 +28,7 @@ public class ResortServiceImpl implements ResortService {
     @Autowired
     HotelService hotelService;
 
-    private static final Logger logger = LoggerFactory.getLogger(Resort.class);
+    private static final Logger logger = LoggerFactory.getLogger(ResortRepository.class);
 
     @Override
     public List<Resort> getAll() {
@@ -75,10 +75,10 @@ for(Tour tour:resort.getTours()){
         return savedResort;
     }
 
-        @Override
-        public Resort getByName(String name) {
-            return resortRepository.findByName(name);
-        }
+    @Override
+    public Resort getByName(String name) {
+        return resortRepository.findByName(name);
+    }
 
     @Override
     public void checkActive() {

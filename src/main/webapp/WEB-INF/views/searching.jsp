@@ -1,14 +1,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Мария
-  Date: 23.05.2019
-  Time: 16:22
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+
 <html>
 <head>
     <title>Title</title>
@@ -34,22 +30,11 @@
 
 <jsp:include page="template/header.jsp"></jsp:include>
 
-<%--<div class="container-fluid ">--%>
-    <%--<div class="row alert text-center">--%>
-        <%--<div class="col-12">--%>
-            <%--<h1 class="display-4">Tours</h1>--%>
-            <%--<h1 style="text-align: center">Tours</h1>--%>
-        <%--</div>--%>
-        <%--<hr>--%>
-    <%--</div>--%>
-<%--</div>--%>
-
-
 
 <div class="container">
     <div class="row">
         <div class="col mb-5 mt-2">
-            <h1 style="text-align: center" class="display-4">Tours</h1>
+            <h1 style="text-align: center" class="display-4"><spring:message code="tours"/></h1>
         </div>
         <hr>
     </div>
@@ -64,16 +49,16 @@
                 <div class="form-inline">
                 <%--<div class="row alert text-center">--%>
                     <div class="md-form my-0">
-                        <input type="search" class="form-control mr-sm-4" name="name" placeholder="input resort" aria-label="Search">
+                        <input type="search" class="form-control mr-sm-4" name="name" placeholder=<spring:message code="resort.placeholder"/> aria-label="Search">
                     </div>
                     <div class="md-form my-0">
-                        <input type="date" class="form-control mr-sm-4" name="date" placeholder="input date" min="12.05.2019" aria-label="Search">
+                        <input type="date" class="form-control mr-sm-4" name="date"  min="12.05.2019" aria-label="Search">
                     </div>
                     <div class="md-form my-0">
-                        <input type="text" class="form-control mr-sm-4"  name="price" placeholder="input price" aria-label="Search">
+                        <input type="text" class="form-control mr-sm-4"  name="price" placeholder=<spring:message code="price"/>  aria-label="Search">
                     </div>
                     <div class="md-form my-0">
-                        <input type="submit"  onClick="return validate_form(this.form)" class="btn btn-secondary form-control mr-sm-4"  value="Search">
+                        <input type="submit"  onClick="return validate_form(this.form)" class="btn btn-secondary form-control mr-sm-4"  value=<spring:message code="button.search"/> >
                     </div>
                 </div>
                 <%--</div>--%>
@@ -91,19 +76,16 @@
 
             <div class="col-md-4">
                 <div class="card">
-                    <%--<img src="${img1}" class="card-img-top">--%>
                         <img src="/img/${tour.filename}" class="card-img-top">
                     <div class="card-body">
-                        <h4 class="card-title"><c:out value="${tour.name}" /></h4>
-                        <p class="card-text">Tour :
-                            Resort = <c:out value="${tour.resort.name}" />
-                            Full price =  <c:out value="${tour.full_price}" />
-                            <%--Date begin = <c:out value="${tour.date_begin}"/>--%>
-                            <%--Date end = <c:out value="${tour.date_end}"/>--%>
-                            Data begin =  <fmt:formatDate value="${tour.date_begin}" pattern="dd.MM.yyyy"  />
-                            Date end = <fmt:formatDate value="${tour.date_end}" pattern="dd.MM.yyyy"  />
+                        <h4 class="card-title"><c:out value="${tour.name}" />, <c:out value="${tour.resort.name}" /></h4>
+                        <p class="card-text">
+                            <spring:message code="price"/> : <c:out value="${tour.full_price}" />
+                            <p>
+                            <fmt:formatDate value="${tour.date_begin}" pattern="dd.MM.yyyy"  /> - <fmt:formatDate value="${tour.date_end}" pattern="dd.MM.yyyy"  />
+                            </p>
                         </p>
-                        <a href="${saveUrl}" class="btn btn-info">Book</a>
+                        <a href="${saveUrl}" class="btn btn-info"><spring:message code="book.button"/></a>
                     </div>
                 </div>
             </div>
@@ -118,8 +100,7 @@
 </form:form>
 <script type="text/javascript">
     window.onload= function(){
-        // document.querySelector('input[type="date"]').value=(new Date()).toISOString().substr(0,10);
-        var dateControl = document.querySelector('input[type="date"]');
+         var dateControl = document.querySelector('input[type="date"]');
         dateControl.min =(new Date()).toISOString().substr(0,10);
     }
 </script>

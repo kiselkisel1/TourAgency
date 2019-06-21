@@ -70,7 +70,9 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
-    public String welcome(Model model) {
+    public String welcome(Model model)
+    {
+        logger.debug("show welcome page");
         return "welcome";
     }
 

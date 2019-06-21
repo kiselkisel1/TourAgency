@@ -1,15 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Мария
-  Date: 16.05.2019
-  Time: 19:11
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <html>
 <head>
+    <meta charset="utf-8">
+
     <title>Account</title>
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 
@@ -21,14 +20,67 @@
 <body>
 <c:url var="deleteImgUrl" value="/resources/img/delete.png" />
 <c:url var="payImgUrl" value="/resources/img/pay.png" />
-<jsp:include page="template/header.jsp"></jsp:include>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Sun travel</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
+    <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/"><spring:message code="home"/></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/search"><spring:message code="tours"/></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/account?username=${pageContext.request.userPrincipal.name}"><spring:message code="account"/></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="/resort/list"><spring:message code="admin"/></a>
+            </li>
+
+        </ul>
+
+        <c:choose>
+            <c:when test="${pageContext.request.userPrincipal.name == null}">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login"><spring:message code="logIn"/></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/registration"><spring:message code="createAccount"/></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${contextPath}?lang=en">en</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${contextPath}?lang=ru">ru</a>
+                    </li>
+
+                </ul>
+
+            </c:when>
+            <c:otherwise>
+                <form id="logoutForm" method="POST" action="/logout">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+                <div class="navbar-text"><a href="/account?username=${pageContext.request.userPrincipal.name}&lang=en">en</a> <a href="/account?username=${pageContext.request.userPrincipal.name}&lang=ru">ru</a> ${pageContext.request.userPrincipal.name}| <a onclick="document.forms['logoutForm'].submit()"><spring:message code="logOut"/></a></div>
+            </c:otherwise>
+        </c:choose>
+    </div>
+
+</nav>
 <c:if test="${pageContext.request.userPrincipal.name != null}">
 
     <div class="container">
         <div class="row">
             <div class="col mb-4 mt-4">
-                <h2>Account ${pageContext.request.userPrincipal.name}</h2>
+                <h2><spring:message code="account"/> ${pageContext.request.userPrincipal.name}</h2>
             </div>
             <hr>
         </div>
@@ -43,15 +95,12 @@
 <table class="table">
     <thead class="thead-light">
     <tr>
-        <th scope="col">Resort = <c:out value="${tour.resort.name}" /></th>
-        <th scope="col">Tour = <c:out value="${tour.name}" /></th>
-        <th scope="col">Price = <c:out value="${tour.full_price}" /></th>
-        <th scope="col">Data begin =  <fmt:formatDate value="${tour.date_begin}" pattern="dd.MM.yyyy"  /></th>
-        <th scope="col">Date end = <fmt:formatDate value="${tour.date_end}" pattern="dd.MM.yyyy"  /></th>
-        <th scope="col"> <a href="${deleteTour}"><img src="${deleteImgUrl}"></img></a></th>
-        <%--<th scope="col"> <a href="${pay}"><img src="${payImgUrl}"></img></a></th>--%>
-        <%--<th scope="col"> <a href="#"><img src="${payImgUrl}"></img></a></th>--%>
-
+        <th scope="col"><c:out value="${tour.resort.name}" /></th>
+        <th scope="col"><c:out value="${tour.name}" /></th>
+        <th scope="col"><c:out value="${tour.full_price}" /></th>
+        <th scope="col"><fmt:formatDate value="${tour.date_begin}" pattern="dd.MM.yyyy"  /></th>
+        <th scope="col"><fmt:formatDate value="${tour.date_end}" pattern="dd.MM.yyyy"  /></th>
+        <th scope="col"><a href="${deleteTour}"><img src="${deleteImgUrl}"></img></a></th>
 
     </tr>
     </thead>
@@ -59,16 +108,12 @@
     <tr>
     <c:forEach items="${tour.transports}" var="transport">
         <c:if test="${transport.booked == true}">
-            <th scope="row">Transport</th>
+            <th scope="row"><spring:message code="transport"/></th>
             <td> <c:out value="${transport.id}" /></td>
             <td> <c:out value="${transport.description}" /></td>
-            <td>  <c:out value="${transport.name}" /></td>
+            <td> <c:out value="${transport.name}" /></td>
             <td> </td>
             <td> </td>
-        <%--<c:out value="${transport.id}" />--%>
-        <%--<c:out value="${transport.description}" />--%>
-        <%--<c:out value="${transport.name}" />--%>
-
     </c:if>
     </c:forEach>
     </tr>
@@ -76,16 +121,12 @@
     <tr>
     <c:forEach items="${tour.hotels}" var="hotel">
         <c:if test="${hotel.booked == true}">
-        <th scope="row">Hotel</th>
-        <td> <c:out value="${hotel.id}" /></td>
-        <td>  <c:out value="${hotel.name}" /></td>
-        <td>   <c:out value="${hotel.address}" /></td>
+        <th scope="row"><spring:message code="hotel"/></th>
+        <td><c:out value="${hotel.id}" /></td>
+        <td><c:out value="${hotel.name}" /></td>
+        <td><c:out value="${hotel.address}" /></td>
             <td> </td>
             <td> </td>
-            <%--<c:out value="${hotel.id}" />--%>
-            <%--<c:out value="${hotel.name}" />--%>
-            <%--<c:out value="${hotel.address}" />--%>
-
         </c:if>
     </c:forEach>
     </tr>

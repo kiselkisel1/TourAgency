@@ -1,13 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Мария
-  Date: 17.05.2019
-  Time: 17:56
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+
+  <%--Created by IntelliJ IDEA.--%>
+  <%--User: Мария--%>
+  <%--Date: 17.05.2019--%>
+  <%--Time: 17:56--%>
+  <%--To change this template use File | Settings | File Templates.--%>
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
 <html>
 <head>
     <title>Hotel</title>
@@ -25,7 +27,7 @@
 <div class="container">
     <div class="row">
         <div class="col mb-5 mt-2">
-            <h1 class="display-4">Hotels</h1>
+            <h1 class="display-4"><spring:message code="hotel"/></h1>
         </div>
         <hr>
     </div>
@@ -43,11 +45,11 @@
               <img src="/img/${hotel.filename}" class="card-img-top">
               <div class="card-body">
                   <h4 class="card-title"><c:out value="${hotel.name}" /></h4>
-                  <p class="card-text">Hotel :
-             <c:out value="${hotel.stars}" /> stars,
-            Address : <c:out value="${hotel.address}" />
+                  <p class="card-text">
+             <c:out value="${hotel.stars}" /> <spring:message code="stars"/>,
+            <c:out value="${hotel.address}" />
                   </p>
-            <a href="${chooseHotel}" class="btn btn-info">Choose</a>
+            <a href="${chooseHotel}" class="btn btn-info"><spring:message code="choose"/></a>
               </div>
           </div>
       </div>

@@ -1,16 +1,15 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Мария
-  Date: 06.05.2019
-  Time: 17:27
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
+
 <html>
 <head>
-    <title>Title</title>
+    <%--<meta charset="utf-8">--%>
+    <title>Log in</title>
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,20 +19,22 @@
 </head>
 <body>
 <div class="container">
+    <jsp:include page="/WEB-INF/views/template/language.jsp"></jsp:include>
+
 <form:form modelAttribute="resort" method="POST" action="${saveUrl}">
-    <div class="container mt-3 mb-4 text-center" > <h2>Add resort</h2> </div>
+    <div class="container mt-3 mb-4 text-center" > <h2><spring:message code="resort.placeholder"/></h2> </div>
 
     <c:url var="saveUrl" value="/resort/add" />
 
     <div class="form-group row">
-        <form:label path="name" class="col-sm-2 col-form-label">Name : </form:label>
+        <form:label path="name" class="col-sm-2 col-form-label"><spring:message code="name"/></form:label>
         <div class="col-sm-7">
             <form:input class="form-control" path="name"/>
             <form:errors path="name"/>
         </div>
     </div>
 
-    <button class="btn btn-primary btn-lg" type="submit">Save</button>
+    <button class="btn btn-primary btn-lg" type="submit"><spring:message code="save"/></button>
 </form:form>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
